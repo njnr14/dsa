@@ -44,6 +44,20 @@ class SGTree{
             return 0;
             
         }
+
+	void update(int ind ,int low ,int high ,int i ,int val){
+            if(low==high){
+                seg[ind] = val;
+                return;
+            }
+            
+            int mid = (low+high)>>1;
+            if(i <= mid)update(2*ind+1 , low , mid, i ,val);
+            else update(2*ind+2 , mid+1 , high, i ,val);
+            
+            seg[ind] = min(seg[2*ind+1] , seg[2*ind+2]);
+            return;
+        }
         
         void printSG(){
             for(auto it:seg){
@@ -59,7 +73,7 @@ class SGTree{
 
 
 int main() {
-	// your code goes here
+
     int n ;
     cin>>n;
     
@@ -86,6 +100,14 @@ int main() {
         cout<<tree.query(0 , 0 , n-1 , l,r ,arr)<<endl;
         
     }
+    tree.printSG();
+    tree.update(0 , 0 , n-1 , 2 , 5);
+    arr[2]=5;
+    for(int i = 0 ; i < n ;i++){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+    
     
     tree.printSG();
     return 0;
